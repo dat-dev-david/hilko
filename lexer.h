@@ -9,6 +9,8 @@ namespace hlk{
     struct LinePos;
     class LEX;
     enum class Tokens;
+    __string keywords[] = {"bool", "break", "case", "char", "class", "continue", "default", "define", "defined", "else", "enum", "false", "if", "int", "jump", "long", "namespace", "return", "struct", "switch", "template", "true", "while"};
+    
 }
 
 struct LinePos{
@@ -28,7 +30,16 @@ enum class MultiCharOperators{
     MUL_ASSIGNMENT,
     DIV_ASSIGNMENT,
     LTHAN_EQUAL,
-    GTHAN_EQUAL
+    GTHAN_EQUAL,
+    INCREMENT,
+    DECREMENT,
+    COMMENT,
+    MULTI_LINE_COMMENT,
+    SCOPE,
+    TERNARY,
+    REAL_BACKSLASH,
+    ESCAPE_SEQ,
+    TETRATION
 };
 
 enum class Operators{
@@ -53,21 +64,25 @@ enum class Operators{
     LTHAN = 0x3e,
     QUESTION = 0x3f,
     AT = 0x40,
-    L_SQUARE_BRACKET = 0x41,
-    R_SQUARE_BRACKET = 0x43,
-    BACK_SLASH = 0x42,
-    
+    L_SQUARE_BRACKET = 0x5b,
+    BACK_SLASH = 0x5c,
+    R_SQUARE_BRACKET = 0x5d,
+    CARET = 0x5e,
+    L_CURLY_BRACKET = 0x7b,
+    PIPE = 0x7c,
+    R_CURLY_BRACKET = 0x7d,
+    TILDE = 0x7e
 };
 
 struct Token{
-    TokenType* token_type;
-    LinePos* lnpos;
-    Operators* op;
-    MultiCharOperators* multi_ln_op;
+    TokenType* token_type {new TokenType};
+    LinePos* lnpos {new LinePos};
+    Operators* op {new Operators};
+    MultiCharOperators* multi_ln_op {new MultiCharOperators};
 };
 
 class LEX{
-    Token* token;
+    Token* token {new Token};
     bool ISNUM(char& selection){
         if(selection <= '0' && selection >= '9'){
             return true;
@@ -103,6 +118,10 @@ class LEX{
         }
         return true;
     }
+
+    /*bool ISKEYWORD(){
+
+    }*/
 
 };
 
