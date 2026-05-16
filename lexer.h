@@ -1,9 +1,16 @@
 #ifndef HLK_LEXER
 #define HLK_LEXER
 
+#include <string_view>
+
 #define __string std::string_view
 
 static bool entry_point_count = 0;
+
+template<class S>
+constexpr void DEL(S* s){
+    delete s;
+}
 
 namespace hlk{
     struct LinePos;
@@ -78,7 +85,11 @@ struct Token{
     TokenType* token_type {new TokenType};
     LinePos* lnpos {new LinePos};
     Operators* op {new Operators};
-    MultiCharOperators* multi_ln_op {new MultiCharOperators};
+    MultiCharOperators* multi_ch_op{new MultiCharOperators};
+
+    ~Token(){
+        ::DEL(token_type); ::DEL(lnpos); ::DEL(op); ::DEL(multi_ch_op);
+    }
 };
 
 class LEX{
@@ -90,7 +101,7 @@ class LEX{
             return false;
         }
     }
-//65-90 97-122
+
     bool ISCHAR(char& selection){
         if((selection >= 65 && selection <= 90) || (selection >= 97 && selection <= 122)){
             return true;
@@ -107,7 +118,7 @@ class LEX{
         } else {
             return false;
         }
-        while(pos != std::string::npos){
+        while(pos != ){
             c=src.at(pos);
             if(ISCHAR(c) && ISNUM(c) || (c == '$' || c == '_')){
                 ++pos;
@@ -119,10 +130,18 @@ class LEX{
         return true;
     }
 
-    /*bool ISKEYWORD(){
+    bool ISKEYWORD(__string& src){
+        size_t pos{0};
+        
+    }
 
-    }*/
+    LEX(){
 
+    }
+
+    ~LEX(){
+        ::DEL(token);
+    }
 };
 
 #endif
