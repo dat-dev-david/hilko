@@ -5,6 +5,7 @@
 
 #define __string std::string_view
 
+namespace hlk{static const unsigned int npos = -1;}
 static bool entry_point_count = 0;
 
 template<class S>
@@ -118,7 +119,7 @@ class LEX{
         } else {
             return false;
         }
-        while(pos != ){
+        while(pos != hlk::npos){
             c=src.at(pos);
             if(ISCHAR(c) && ISNUM(c) || (c == '$' || c == '_')){
                 ++pos;
@@ -130,10 +131,7 @@ class LEX{
         return true;
     }
 
-    bool ISKEYWORD(__string& src){
-        size_t pos{0};
-        
-    }
+   // bool ISKEYWORD(__string& src){}
 
     LEX(){
 
